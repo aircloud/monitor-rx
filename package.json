@@ -1,0 +1,22 @@
+{
+  "name": "monitor-rx",
+  "version": "0.0.5",
+  "description": "The rxjs workflow for Node.js monitor app",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx babel src --out-dir dist",
+    "pub": "npm run build && npm publish ."
+  },
+  "author": "iconie",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}

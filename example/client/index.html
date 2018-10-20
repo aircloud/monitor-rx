@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p>CPU监控：</p>
+<p id="cpu"></p>
+<p>内存监控：</p>
+<p id="memory"></p>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
+<script>
+    const wsQueryMap = new Map();
+    wsQueryMap.set('cpu', {
+        module: 'cpu',
+        func: '',
+        args: []
+    });
+    wsQueryMap.set('memory', {
+        module: 'memory',
+        func: '',
+        args: [],
+    });
+
+    const sock = new SockJS('http://localhost:9900/echo');
+    sock.onopen = function() {
+        console.log('open');
+
+        for(let key of wsQueryMap.keys()) {
+            let id = `${key}::${Date.now()}`;
+            let queryItem = Object.assign({}, wsQueryMap.get(key), { id });
+            sock.send(JSON.stringify({ querys:Array.from([queryItem]) }));
+        }
+
+    };
+
+    sock.onmessage = function(e) {
+        let data = e.data;
+        data = typeof data === 'string' ? JSON.parse(data) : data;
+        switch (data.id.split("::")[0]) {
+            case 'cpu':
+                document.getElementById('cpu').innerHTML = `当前使用率: ${data.percentageCPU}%`;
+                break;
+            case 'memory':
+                document.getElementById('memory').innerHTML = `
+                常驻内存：${data.rss}，
+                V8 堆内存总量：${data.heapTotal},
+                V8 堆内存使用量：${data.heapUsed},
+                V8 外部内存：${data.external}`;
+                break;
+            default:
+                break;
+        }
+    };
+
+    sock.onclose = function() {
+        console.log('close');
+    };
+
+</script>
+</html>
