@@ -59,8 +59,9 @@ class Server {
             } else {
                 funcs = [[queryInfo.func, [...(queryInfo.args || [])]]];
             }
+
             let opts = Object.assign({}, queryItem.opts || {});
-            let source = this.RxModules[queryItem.module](Rx, Operators, Object.assign({}, { funcs }, opts));
+            let source = this.RxModules[queryItem.module](Rx, Operators, Object.assign({}, { funcs: new Map(funcs) }, opts));
 
             let subject = new Rx.Subject();
             let refCounted = source.pipe(Operators.multicast(subject)).refCount();
