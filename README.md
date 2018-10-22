@@ -9,7 +9,7 @@
 ```javascript
 const monitorRx = require('monitor-rx');
 
-const RxModules = {/*你的 Observer 实例集合*/};
+const RxModules = {/*你的 Observable 实例集合*/};
 
 let monitorServer = new monitorRx.Server({ RxModules });
 
@@ -34,9 +34,9 @@ setTimeout(() => {
 
 Monitor-RX 是一个基于 Rx.js 的多用户监控系统解决方案，可以进行资源复用和管理。
 
-### Observer 生成器
+### Observable 生成器
 
-上面的 RxModules 是一个 Observer 生成器集合对象，其每一个键名为 Observer 生成器名，而值为对应的 Observer 生成器函数，其可以返回一个 Observer 实例。
+上面的 RxModules 是一个 Observable 生成器集合对象，其每一个键名为 Observable 生成器名，而值为对应的 Observable 生成器函数，其可以返回一个 Observable 实例。
 
 如果是一个无依赖的定时任务，我们可以通过 monitor-rx 提供的 `convertToRx` 或 `convertToSimpleRx` 转换成 Observable 生成函数，例如：
 
