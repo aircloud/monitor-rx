@@ -1,3 +1,5 @@
+>2019.06.22 补充评论：这种方案由于还要维护很多函数句柄，实际上不是最优的方案。
+
 ## Monitor-RX Workflow
 
 使用前需要了解 [Rx.js](https://cn.rx.js.org/) 以及其 [Observable](https://cn.rx.js.org/class/es6/Observable.js~Observable.html)。
